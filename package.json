@@ -1,0 +1,19 @@
+{
+  "name": "blocipedia",
+  "version": "1.0.0",
+  "description": "package for blocipedia app",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "set NODE_ENV=test&& jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ryanmwb/blocipedia-node.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ryanmwb/blocipedia-node/issues"
+  },
+  "homepage": "https://github.com/Ryanmwb/blocipedia-node#readme"
+}
