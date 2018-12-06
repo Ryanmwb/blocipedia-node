@@ -20,6 +20,7 @@
     "password": null,
     "database": "database_production",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "db": "process.env.https://data.heroku.com/datastores/41c583ad-8497-4049-90c4-4e191b0ca992"
   }
 }
