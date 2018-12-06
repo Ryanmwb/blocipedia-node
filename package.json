@@ -20,7 +20,6 @@
   "devDependencies": {
     "faker": "^4.1.0",
     "jasmine": "^3.0.0",
-    "morgan": "^1.9.1",
     "request": "^2.83.0"
   },
   "dependencies": {
@@ -30,6 +29,7 @@
     "express": "^4.16.2",
     "pg": "^7.4.1",
     "pg-hstore": "^2.3.2",
-    "sequelize": "^4.32.6"
+    "sequelize": "^4.32.6",
+    "morgan": "^1.9.1"
   }
 }
