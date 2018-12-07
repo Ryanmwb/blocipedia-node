@@ -6,6 +6,8 @@ const expressValidator = require("express-validator");
 const session = require("express-session");
 const flash = require("express-flash");
 const passportConfig = require("./passport-config");
+const bodyParser = require("body-parser");
+
 
 module.exports = {
     init(app, express){
