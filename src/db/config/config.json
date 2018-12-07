@@ -2,25 +2,26 @@
   "development": {
     "username": "postgres",
     "password": null,
-    "database": "bloc-dev",
+    "database": "blocipedia",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {
     "username": "postgres",
     "password": null,
-    "database": "bloc-test",
+    "database": "blocipedia-test",
     "host": "127.0.0.1",
     "dialect": "postgres",
     "logging": false,
     "operatorsAliases": false
   },
   "production": {
-    "username": "root",
+    "username": "postgres",
     "password": null,
     "database": "database_production",
+    "logging": false,
     "host": "127.0.0.1",
-    "dialect": "mysql",
+    "dialect": "postgres",
     "db": "process.env.https://data.heroku.com/datastores/41c583ad-8497-4049-90c4-4e191b0ca992"
   }
 }
