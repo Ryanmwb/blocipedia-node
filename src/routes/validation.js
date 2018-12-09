@@ -4,7 +4,7 @@ module.exports = {
       if(req.method === "POST") {
  
  // #1
-        req.checkBody("name", "cannot be empty").isLength({min: 1});
+        //req.checkBody("name", "cannot be empty").isLength({min: 1});  This works for signUp but not signIn
         req.checkBody("email", "must be valid").isEmail();
         req.checkBody("password", "must be at least 6 characters in length").isLength({min: 6})
         req.checkBody("password_conf", "must match password provided").optional().matches(req.body.password);
