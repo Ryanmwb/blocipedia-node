@@ -21,7 +21,6 @@
     "operatorsAliases": false,
     "host": "127.0.0.1",
     "dialect": "postgres",
-    "use_env_variable": "postgres://cdwdendygjlgel:2f1fc4a9e7d8ddc78ae5b33ceef65bc6cc2127064d3d23ab6a3d5ca955302016@ec2-54-225-196-122.compute-1.amazonaws.com:5432/da2t5t4133fgsa",
-    "db": "process.env.https://data.heroku.com/datastores/41c583ad-8497-4049-90c4-4e191b0ca992"
+    "use_env_variable": "DATABASE_URL"
   }
 }
