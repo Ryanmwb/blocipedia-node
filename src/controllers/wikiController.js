@@ -53,16 +53,16 @@ module.exports = {
         });
     },
     destroy(req, res, next){
-        topicQueries.deleteTopic(req, (err, topic) => {
+        wikiQueries.deleteWiki(req, (err, wiki) => {
             if(err){
                 //console.log("topicController destroy err right below...")
                 //console.log(err)
                 res.redirect(
                     typeof err === "number" ? err : 500,
-                    `/topics/${req.params.id}`
+                    `/wikis/${req.params.wikiId}`
                   );
             } else {
-                res.redirect(303, "/topics")
+                res.redirect(303, "/wikis")
             }
         });
     },
@@ -85,6 +85,7 @@ module.exports = {
         wikiQueries.updateWiki(req, req.body, (err, wiki) => {
             if(err || wiki == null){
                 res.redirect(401, `/wikis/${req.params.wikiId}/edit`);
+                console.log(err)
             } else {
                 res.redirect(`/wikis/${req.params.wikiId}`);
             }

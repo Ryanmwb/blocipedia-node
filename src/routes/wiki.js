@@ -9,6 +9,7 @@ router.get("/wikis", wikiController.index);
 router.get("/wikis/:wikiId", wikiController.show);
 router.get("/wikis/:wikiId/edit", wikiController.edit);
 router.post("/wikis/:wikiId/update", wikiController.update);
+router.post("/wikis/:wikiId/destroy", wikiController.destroy)
 
 /*router.post("/user", validation.validateUsers, userController.create);
 router.get("/users/signIn", userController.signInForm);

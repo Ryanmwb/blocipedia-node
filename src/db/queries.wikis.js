@@ -17,8 +17,8 @@ module.exports = {
           private: newWiki.private,
           userId: newWiki.userId
         })
-        .then((topic) => {
-          callback(null, topic);
+        .then((wiki) => {
+          callback(null, wiki);
         })
         .catch((err) => {
           callback(err);
@@ -46,7 +46,7 @@ module.exports = {
               fields: Object.keys(updatedWiki)
             })
             .then(() => {
-              callback(null, topic);
+              callback(null, wiki);
             })
             .catch((err) => {
               callback(err);
@@ -55,6 +55,24 @@ module.exports = {
             req.flash("notice", "You are not authorized to do that.");
             callback("Forbidden");
           }*/
+        });
+    },
+    deleteWiki(req, callback){
+        return Wiki.findById(req.params.wikiId)
+        .then((wiki) => {
+          //const authorized = new Authorizer(req.user, topic).destroy();
+          //if(authorized) {
+            wiki.destroy()
+            .then((res) => {
+              callback(null, wiki);
+            });
+          /*} else {
+            req.flash("notice", "You are not authorized to do that.")
+            callback(401);
+          }*/
+        })
+        .catch((err) => {
+          callback(err);
         });
       }
 }
