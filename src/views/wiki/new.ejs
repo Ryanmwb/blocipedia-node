@@ -23,10 +23,16 @@
           <textarea rows="4" class="form-control" name="body" placeholder="Enter Post body"></textarea>
           <small class="text-muted" id="bodyHelp">body must be 10 or more characters in length.</small>
         </div>
-        <div class="form-check">
-            <input type="checkbox" class="form-check-input" name="private">
-            <label class="form-check-label" for="private">Check me to make Wiki Private</label>
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-secondary active">
+                <input type="radio" name="privacy" autocomplete="off" value="public" checked> Public
+            </label>
+            <label class="btn btn-secondary">
+                <input type="radio" name="privacy" id="option2" autocomplete="off" value="private"> Private
+            </label>
         </div>
+        <br>
+        <br>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
     </main>
