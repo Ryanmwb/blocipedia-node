@@ -23,5 +23,20 @@ module.exports = {
         .catch((err) => {
           callback(err);
         })
+    },
+    getWiki(id, callback){
+        //return Topic.findById(id) //checkpoint has this code in along with the following line of code.  I assume this is an error on their part.
+        return Wiki.findById(id, {
+                include: [{
+                  model: Post,
+                  as: "posts"
+                }]
+              })
+        .then((wiki) => {
+          callback(null, wiki);
+        })
+        .catch((err) => {
+          callback(err);
+        })
     }
 }

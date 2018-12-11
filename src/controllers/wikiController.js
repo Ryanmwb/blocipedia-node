@@ -14,7 +14,7 @@ module.exports = {
             if(err){
                 res.redirect(500, "static/index");
             } else {
-                res.render("wiki/index", {wikis})
+                res.render("wiki/index", {wikis, title: "Wikis"})
             }
         })
     }, 
@@ -36,10 +36,19 @@ module.exports = {
         };
         wikiQueries.addWiki(newWiki, (err, wiki) => {
             if(err){
-                res.redirect(500, "/wiki/new");
+                res.redirect(500, "/wikis/new");
                 console.log(err)
             } else {
-                res.redirect(303, `/wiki/${wiki.id}`);
+                res.redirect(303, `/wikis/${wiki.id}`);
+            }
+        });
+    },
+    show(req, res, next){
+        wikiQueries.getAllWikis(req.params.wikiId, (err, wiki) => {
+            if(err || wiki == null){
+                res.redirect(404, "/")
+            } else {
+                res.render("wiki/new", {wiki});
             }
         });
     }
