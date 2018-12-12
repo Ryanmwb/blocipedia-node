@@ -1,8 +1,14 @@
 const Wiki = require("./models").Wiki
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 
 module.exports = {
-    getAllWikis(callback){
-        return Wiki.all()
+    getAllWikis(userId, callback){
+        return Wiki.all({
+          where: {
+            [Op.or]: [{ private: false }, { userId: userId }]
+          }
+        })
         .then((wikis) => {
             callback(null, wikis);
         })

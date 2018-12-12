@@ -10,7 +10,9 @@ module.exports = {
         console.log("new wiki")
     },
     index(req, res, next){
-        wikiQueries.getAllWikis((err, wikis) => {
+        wikiQueries.getAllWikis(req.user ? req.user.id : null, (err, wikis) => {
+            //user req id here?
+            
             if(err){
                 res.redirect(500, "static/index");
             } else {
