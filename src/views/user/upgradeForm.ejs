@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <% include ../static/partials/head.ejs %>
+  <body>
+
+    <% include ../static/partials/navbar.ejs %>
+
+      <main class="container">
+
+        <% if(currentUser){ %>
+            <form action="/charge" method="POST">
+                <script
+                    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                    data-key="pk_test_TYooMQauvdEDq54NiTphI7jx"
+                    data-amount="1500"
+                    data-name="Stripe.com"
+                    data-description="Example charge"
+                    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                    data-locale="auto"
+                    data-zip-code="true">
+                </script>
+            </form>
+        <% } else { %>
+            <h2>You must be signed in to upgrade your account.</h2>
+        <% } %>
+
+      </main>
+
+      <% include ../static/partials/baseScripts.ejs %>
+    </body>
+</html>

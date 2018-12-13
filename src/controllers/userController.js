@@ -57,5 +57,26 @@ module.exports = {
         req.logout();
         req.flash("Notice", "You've successfully signed out!")
         res.redirect("/")
+    },
+    upgradeForm(req, res, next){
+        var keyPublishable = process.env.PUBLISHABLE_KEY;
+        res.render("user/upgradeForm", {title: "Upgrade", keyPublishable: keyPublishable})
+    },
+    charge(req, res, next){
+        let amount = 1500;
+        const keySecret = process.env.SECRET_KEY;
+        const stripe = require("stripe")(keySecret);
+
+        stripe.customers.create({
+            email: req.body.stripeEmail,
+            source: req.body.stripeToken
+        })
+        .then(customer =>
+            stripe.charges.create({
+            amount,
+            description: "Sample Charge",
+                currency: "usd",
+                customer: customer.id
+        }));
     }
 }
