@@ -22,6 +22,28 @@ module.exports = {
     .catch((err) => {
       callback(err);
     })
+  },
+  upgrade(req, callback){
+    return User.findById(userId)
+    .then((user) => {
+      if(!user){
+        return callback("User not found", null);
+      }
+      let upgradeUser = {
+        username: req.user.username,
+        email: req.user.email,
+        password: req.user.password,
+        role: 1
+      }
+      user.update(upgradeUser, {
+        fields: Object.keys(upgradeUser)
+      })
+      .then(() => {
+        callback(null, user)
+      })
+      .catch((err) => {
+        callback(err);
+      });
+    })
   }
-
 }
