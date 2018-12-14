@@ -11,7 +11,7 @@ for(let i=0; i < 16; i++){
     private: faker.random.boolean(),
     createdAt: new Date(),
     updatedAt: new Date(),
-    userId: 18
+    userId: 1
   })
 }
 

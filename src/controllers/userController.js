@@ -66,6 +66,7 @@ module.exports = {
         let amount = 1500; 
         const keySecret = process.env.SECRET_KEY;
         const stripe = require("stripe")(keySecret);
+        console.log(keySecret)
         console.log("Creating customer...");
         stripe.customers.create({ 
           email: req.body.stripeEmail, 
@@ -78,7 +79,10 @@ module.exports = {
             description: "Sample Charge", 
             currency: "usd", 
             customer: customer.id 
-          }).then(charge => 
+          })
+          
+          
+          /*.then(charge => 
             userQueries.upgrade(req, (err, user) => {
                 if(err || user == null){
                     res.redirect(404, "/");
@@ -86,7 +90,11 @@ module.exports = {
                     res.redirect("/wikis/new", {title: "Create"})
                 }
             })
-          )
+          )*/
+          
+        })
+        .catch((err) => {
+            console.log(err)
         }); 
     } 
 }
