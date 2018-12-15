@@ -80,9 +80,7 @@ module.exports = {
             currency: "usd", 
             customer: customer.id 
           })
-          
-          
-          /*.then(charge => 
+          .then(charge => 
             userQueries.upgrade(req, (err, user) => {
                 if(err || user == null){
                     res.redirect(404, "/");
@@ -90,8 +88,7 @@ module.exports = {
                     res.redirect("/wikis/new", {title: "Create"})
                 }
             })
-          )*/
-          
+          )
         })
         .catch((err) => {
             console.log(err)
