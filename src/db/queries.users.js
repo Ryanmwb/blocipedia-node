@@ -24,26 +24,27 @@ module.exports = {
     })
   },
   upgrade(req, callback){
-    return User.findById(userId)
-    .then((user) => {
-      if(!user){
-        return callback("User not found", null);
-      }
-      let upgradeUser = {
-        username: req.user.username,
-        email: req.user.email,
-        password: req.user.password,
-        role: 1
-      }
-      user.update(upgradeUser, {
-        fields: Object.keys(upgradeUser)
-      })
-      .then(() => {
+      return User.update(
+        {role: 1},
+        {where: {id: req.user.id}}
+      ) 
+      .then((user) => {
         callback(null, user)
       })
       .catch((err) => {
         callback(err);
       });
+  },
+  downgrade(req, callback){
+    return User.update(
+      {role: 0},
+      {where: {id: req.user.id}}
+    )
+    .then((user) => {
+      callback(null, user)
     })
+    .catch((err) => {
+      callback(err)
+    });
   }
 }

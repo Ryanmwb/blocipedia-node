@@ -5,13 +5,22 @@
 
     <% include ../static/partials/navbar.ejs %>
 
-      <main class="container">
+    <main class="container">
+        <header class="jumbotron my-4">
+            <% if (currentUser) { %>
+                <h1 class="display-3"><%= currentUser.username %>, Upgrade your account!</h1>
+                <p class="lead">Gain access to create private wikis.</p>
+            <% } else { %>
+                <h1 class="display-3">You must be signed in to upgrade your account.</h1>
+                <a href="users/signIn" class="btn btn-primary btn-lg">Sign up</a>
+            <% } %>
+        </header>
 
         <% if(currentUser){ %>
             <form action="/charge" method="POST">
                 <script
                     src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                    data-key="pk_test_TYooMQauvdEDq54NiTphI7jx"
+                    data-key= <%= process.env.PUBLISHABLE_KEY %>
                     data-amount="1500"
                     data-name="Stripe.com"
                     data-description="Example charge"
@@ -20,10 +29,7 @@
                     data-zip-code="true">
                 </script>
             </form>
-        <% } else { %>
-            <h2>You must be signed in to upgrade your account.</h2>
         <% } %>
-
       </main>
 
       <% include ../static/partials/baseScripts.ejs %>

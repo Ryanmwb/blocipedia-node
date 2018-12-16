@@ -13,12 +13,22 @@
           <li class="nav-item">
               <a class="nav-link" href="/wikis">Wikis</a>
           </li>
-          <% if(currentUser) { %>
+          <% if(currentUser && currentUser.role == 0) { %>
             <li class="nav-item">
               <a class="nav-link" href="/users/<%= currentUser.id %>">Profile will go here</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/users/upgrade_form">Upgrade</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/users/signOut">Sign Out</a>
+            </li>
+          <% } else if(currentUser && currentUser.role == 1) { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/users/<%= currentUser.id %>">Profile will go here</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/users/downgrade_form">Downgrade</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/users/signOut">Sign Out</a>

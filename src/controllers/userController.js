@@ -83,15 +83,35 @@ module.exports = {
           .then(charge => 
             userQueries.upgrade(req, (err, user) => {
                 if(err || user == null){
+                    console.log("charged customer.  Upgrading customer BUT error...")
+                    console.log(err)
                     res.redirect(404, "/");
                 } else {
-                    res.redirect("/wikis/new", {title: "Create"})
+                    console.log("charged customer.  Upgrading customer...")
+                    res.redirect("/")
                 }
             })
           )
+          .catch((err) => {
+              console.log(err)
+          })
         })
         .catch((err) => {
             console.log(err)
         }); 
+    },
+    downgradeForm(req, res, next){
+        res.render("user/downgradeForm", {title: "Downgrade"})
+    },
+    downgrade(req, res, next){
+        userQueries.downgrade(req, (err, user) => {
+            if(err || user == null){
+                console.log("downgrade user error...")
+                console.log(err)
+            } else {
+                console.log("User has been downgraded to a default account")
+                res.redirect("/")
+            }
+        })
     } 
 }
