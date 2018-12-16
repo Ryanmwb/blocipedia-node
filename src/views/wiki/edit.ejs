@@ -22,6 +22,18 @@
 <!-- #3 -->
           <textarea rows="4" class="form-control" name="body" placeholder="Enter Body"><%= wiki.body %></textarea>
         </div>
+        <% if(currentUser.role > 0) { %>
+          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+              <label class="btn btn-secondary active">
+                  <input type="radio" name="privacy" autocomplete="off" value="public" checked> Public
+              </label>
+              <label class="btn btn-secondary">
+                  <input type="radio" name="privacy" id="option2" autocomplete="off" value="private"> Private
+              </label>
+          </div>
+          <br>
+          <br>
+        <% } %>
         <button type="submit" class="btn btn-primary">Update</button>
       </form>
     </main>
