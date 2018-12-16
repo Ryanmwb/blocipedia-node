@@ -80,5 +80,17 @@ module.exports = {
         .catch((err) => {
           callback(err);
         });
-      }
+    }, 
+    downgrade(req, callback){
+      return Wiki.update(
+        {private: false},
+        {where: {userId: req.user.id}}
+      )
+      .then((wiki) => {
+        callback(null, wiki)
+      })
+      .catch((err) => {
+        callback(err)
+      })
+    }
 }

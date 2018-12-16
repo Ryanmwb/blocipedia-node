@@ -1,4 +1,5 @@
 const userQueries = require("../db/queries.users.js");
+const wikiQueries = require("../db/queries.wikis.js")
 const passport = require("passport");
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -106,6 +107,15 @@ module.exports = {
     downgrade(req, res, next){
         userQueries.downgrade(req, (err, user) => {
             if(err || user == null){
+                console.log("downgrade user error...")
+                console.log(err)
+            } else {
+                console.log("User has been downgraded to a default account")
+                //res.redirect("/")
+            }
+        })
+        wikiQueries.downgrade(req, (err, wiki) => {
+            if(err || wiki == null){
                 console.log("downgrade user error...")
                 console.log(err)
             } else {
