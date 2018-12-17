@@ -7,7 +7,7 @@ module.exports = {
       console.log(req.user.username)
     }*/
     new(req, res, next){
-        res.render("wiki/new", {title: "Create a Wiki", markdown: markdown});
+        res.render("wiki/new", {title: "Create a Wiki"});
         console.log("new wiki")
     },
     index(req, res, next){
@@ -23,7 +23,7 @@ module.exports = {
     }, 
     create(req, res, next){
 
-        let privacy
+        let privacy;
 
         if(req.body.privacy === "private"){
             privacy = true;
@@ -51,7 +51,8 @@ module.exports = {
             if(err || wiki == null){
                 res.redirect(404, "/")
             } else {
-                res.render("wiki/show", {wiki, title: "Wiki"});
+                let wikiMDhtml = markdown.toHTML(wiki.body)
+                res.render("wiki/show", {wiki, body: wikiMDhtml, title: "Wiki"});
             }
         });
     },
