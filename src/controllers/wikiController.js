@@ -1,4 +1,6 @@
 const wikiQueries = require("../db/queries.wikis");
+const collaboratorQueries = require("../db/queries.collaborators")
+const userQueries = require("../db/queries.users");
 const markdown = require( "markdown" ).markdown;
 
 module.exports = {
@@ -73,24 +75,80 @@ module.exports = {
     edit(req, res, next){
         wikiQueries.getWiki(req.params.wikiId, (err, wiki) => {
             if(err || wiki == null){
+                console.log(err)
                 res.redirect(404, "/");
             } else {
+                /*var collaborator;
+                for(var i=0; i < wiki.collaborators.length; i++){
+                    if(wiki.collaborators[i] === currentUser.id){
+                        collaborator = true;
+                    }
+                }*/
                 /*const authorized = new Authorizer(req.user, topic).edit();
                 if(authorized){*/
-                    res.render("wiki/edit", {wiki, title: "Edit"});
+                    res.render("wiki/edit", {wiki, /*collaborator,*/ title: "Edit"});
                 /*} else {
                     req.flash("You are not authorized to do that.")
                     res.redirect(`/topics/${req.params.id}`)
                 }*/
             }
-        });
+        })
+        .catch((err) => {
+            console.log(err)
+        })
     },
     update(req, res, next){
+        var userExists;
+        var userAlreadyCollaborating;
+        function doesUserExist(req){
+            var collaboratorUsername = req.body.collaborator;
+            userQueries.findUser(collaboratorUsername)
+            .then((user) => {
+                if(user){
+                    console.log(".userExists returns...")
+                    console.log(user)
+                    userExists = true
+                } else {
+                    userExists = false
+                }
+            })
+        };
+        function collaboratorAlreadyExists(wikiId, userId){
+            collaboratorQueries.getCollaborators(wikiId)
+            .then((collaborators) => {
+                for(var i=0; i<collaborators.length; i++){
+                    if(collaborators[i].userId == userId){
+                        userAlreadyCollaborating = true;
+                    } else {
+                        userAlreadyCollaborating = false;
+                    }
+                }
+            })
+        };
         wikiQueries.updateWiki(req, req.body, (err, wiki) => {
             if(err || wiki == null){
                 res.redirect(401, `/wikis/${req.params.wikiId}/edit`);
                 console.log(err)
             } else {
+                if(req.body.collaborator != null){
+                    console.log("1) req.body.collaborator is not null")
+                    doesUserExist(req);
+                    if(userExists == false){
+                        res.redirect(404, `/wikis/${req.params.wikiId}/edit`)
+                        console.log("Username does not exist.")
+                    } else {
+                        collaboratorAlreadyExists(wiki.id, req.user.id)
+                        console.log("collaboratorAlreadyExists was ran...")
+                        if(userAlreadyCollaborating == false){
+                            collaboratorQueries.createCollaborator(req.params.wikiId, req.user.id, (err, collaborator) => {
+                                if(err || collaborator == null){
+                                    console.log(err);
+                                    res.redirect(`/wikis/${req.params.wikiId}`);
+                                }
+                            })
+                        }
+                    }
+                }
                 res.redirect(`/wikis/${req.params.wikiId}`);
             }
         });

@@ -2,11 +2,11 @@
 module.exports = (sequelize, DataTypes) => {
   var Collaborator = sequelize.define('Collaborator', {
     wikiId: {
-      type: sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     userId: {
-      type: sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull: false
     }
   }, {});

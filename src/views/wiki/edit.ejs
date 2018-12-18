@@ -10,6 +10,7 @@
 
       <h1>Edit Wiki</h1>
 
+      <% if(currentUser.id === wiki.userId || collaborator == true) { %>
 <!-- #1 -->
       <form action="/wikis/<%= wiki.id %>/update" method="post">
         <div class="form-group">
@@ -22,20 +23,39 @@
 <!-- #3 -->
           <textarea rows="4" class="form-control" name="body" placeholder="Enter Body"><%= wiki.body %></textarea>
         </div>
-        <% if(currentUser.role > 0) { %>
+        <% if((currentUser.role > 0 && currentUser.id === wiki.userId) || (currentUser.role === 3)) { %>
           <div class="btn-group btn-group-toggle" data-toggle="buttons">
               <label class="btn btn-secondary active">
+                <% if(wiki.privacy === false){ %>
                   <input type="radio" name="privacy" autocomplete="off" value="public" checked> Public
+                <% } else { %>
+                  <input type="radio" name="privacy" autocomplete="off" value="public"> Public
+                <% } %>
               </label>
               <label class="btn btn-secondary">
+                <% if(wiki.privacy === false){ %>
                   <input type="radio" name="privacy" id="option2" autocomplete="off" value="private"> Private
+                <% } else { %>
+                  <input type="radio" name="privacy" id="option2" autocomplete="off" value="private" checked> Private
+                <% } %>
               </label>
+          </div>
+          <br>
+          <br>
+          <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Add Collaborator</span>
+              </div>
+              <input type="text" name="collaborator" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
           </div>
           <br>
           <br>
         <% } %>
         <button type="submit" class="btn btn-primary">Update</button>
       </form>
+      <% } else { %>
+        <h1>You don't own this wiki and you are not a collaborator.</h1>
+      <% } %>
     </main>
 
     <% include ../static/partials/baseScripts.ejs %>
