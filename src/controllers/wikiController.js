@@ -94,5 +94,25 @@ module.exports = {
                 res.redirect(`/wikis/${req.params.wikiId}`);
             }
         });
+    },
+    collabCreate(req, res, next){
+        wikiQueries.collabCreate(req, (err) => {
+            if(err){
+                res.redirect("/");
+                console.log(err);
+            } else {
+                res.redirect(`/wikis/${req.params.wikiId}`);
+            }
+        });
+    },
+    collabDelete(req, res, next){
+        wikiQueries.collabDelete(req, (err) => {
+            if(err){
+                res.redirect("/");
+                console.log(err);
+            } else {
+                res.redirect(`/wikis`);
+            }
+        });
     }
   }

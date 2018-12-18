@@ -36,7 +36,7 @@ module.exports = {
         allowNull: false,
         references: {
           model: "Users",
-          ket: "id",
+          key: "id",
           as: "userId"
         }
       }

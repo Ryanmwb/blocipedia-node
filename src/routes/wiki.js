@@ -9,11 +9,8 @@ router.get("/wikis", wikiController.index);
 router.get("/wikis/:wikiId", wikiController.show);
 router.get("/wikis/:wikiId/edit", wikiController.edit);
 router.post("/wikis/:wikiId/update", wikiController.update);
-router.post("/wikis/:wikiId/destroy", wikiController.destroy)
-
-/*router.post("/user", validation.validateUsers, userController.create);
-router.get("/users/signIn", userController.signInForm);
-router.post("/users/signIn", validation.validateUsers, userController.signIn);
-router.get("/users/signOut", userController.signOut)*/
+router.post("/wikis/:wikiId/destroy", wikiController.destroy);
+router.post("/collaborators/create", wikiController.collabCreate);
+router.post("/collaborators/delete", wikiController.collabDelete);
 
 module.exports = router;
