@@ -131,16 +131,33 @@ module.exports = {
             })
         };
         
+        doesUserExist(req.body.username)
+        .then(() => {
+            wikiQueries.updateWiki(req, req.body, (err, wiki) => {
+                if(err || wiki == null){
+                    console.log(err);
+                    res.redirect(`/wikis/${req.params.wikiId}`);
+                } /*else {
+                    // 1) call createCollaborator()
+                    // this will be in callback function res.redirect(`wikis/${req.params.wikiId}`)
+                } */
+            })
+            .then((wiki) => {
+                doesCollaboratorAlreadyExist(wiki.id, req.body.collaborator)
+                .then(() => {
+                    if(userExists == true && collaboratorAlreadyExists == false){
+                        collaboratorQueries.createCollaborator(wiki.id, req.body.collaborator, (err, collaborator) => {
+                            if(err){
+                                console.log(err)
+                            } else {
+                                res.redirect(`/wikis/${req.params.wikiId}`)
+                            }
+                        })
+                    }
+                })
+            })
+        })
         
-        wikiQueries.updateWiki(req, req.body, (err, wiki) => {
-            if(err || wiki == null){
-                console.log(err);
-                res.redirect(`/wikis/${req.params.wikiId}`);
-            } else {
-                // 1) call createCollaborator()
-                // this will be in callback function res.redirect(`wikis/${req.params.wikiId}`)
-            }
-            
-        });
+        
     }
   }
