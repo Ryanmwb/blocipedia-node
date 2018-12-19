@@ -98,16 +98,15 @@ module.exports = {
         })
     },
     update(req, res, next){
-        var userExists;
         var collaboratorAlreadyExists;
 
         function doesUserExist(username){
             userQueries.findUser(username)
             .then((user) => {
                 if(user){
-                    userExists = true;
+                    return true;
                 } else {
-                    userExists = false;
+                    return false;
                 }
             })
             .catch((err) => {
@@ -131,8 +130,8 @@ module.exports = {
             })
         };
         
-        doesUserExist(req.body.username)
-        .then(() => {
+        doesUserExist(req.body.username) //start back up here
+        .then((userExists) => {
             wikiQueries.updateWiki(req, req.body, (err, wiki) => {
                 if(err || wiki == null){
                     console.log(err);
