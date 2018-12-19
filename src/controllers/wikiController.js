@@ -101,9 +101,14 @@ module.exports = {
         var collaboratorAlreadyExists;
 
         function doesUserExist(username){
+            console.log("doesUderExist() being ran...")
             userQueries.findUser(username)
             .then((user) => {
                 if(user){
+                    console.log("req.body is...")
+                    console.log(req.body)
+                    console.log("user is...")
+                    console.log(user)
                     return true;
                 } else {
                     return false;
