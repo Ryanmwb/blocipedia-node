@@ -118,7 +118,7 @@ module.exports = {
                 console.log("doesUserExist() has error...")
                 console.log(err)
             })
-        };
+        },
 
         function doesCollaboratorAlreadyExist(wikiId, newId){
             collaboratorQueries.getCollaborators(wikiId)
@@ -133,9 +133,9 @@ module.exports = {
                 console.log("doesCollaboratorAlreadyExist() has error...")
                 console.log(err)
             })
-        };
+        },
         
-        doesUserExist(req.body.username) //start back up here
+        doesUserExist(req.body.collaborator) //start back up here
         .then((userExists) => {
             wikiQueries.updateWiki(req, req.body, (err, wiki) => {
                 if(err || wiki == null){
