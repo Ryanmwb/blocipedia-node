@@ -3,8 +3,8 @@ const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 
 module.exports = {
-    getCollaborators(wikiId){
-        return Collaborator.all({
+    getCollaborator(wikiId){
+        return Collaborator.findOne({
             where: {
                 wikiId: wikiId
             }

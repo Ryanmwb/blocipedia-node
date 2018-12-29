@@ -98,70 +98,62 @@ module.exports = {
         })
     },
     update(req, res, next){
-        var collaboratorAlreadyExists;
+        var userExists = null;
+        var collaboratorAlreadyExists = null;
+        var returnedUser = null;
+        var returnedCollaborator = null;
 
-        function doesUserExist(username){
-            console.log("doesUderExist() being ran...")
-            userQueries.findUser(username)
-            .then((user) => {
-                if(user){
-                    console.log("req.body is...")
-                    console.log(req.body)
-                    console.log("user is...")
-                    console.log(user)
-                    return true;
-                } else {
-                    return false;
-                }
-            })
-            .catch((err) => {
-                console.log("doesUserExist() has error...")
-                console.log(err)
-            })
-        },
-
-        function doesCollaboratorAlreadyExist(wikiId, newId){
-            collaboratorQueries.getCollaborators(wikiId)
-            .then((collaborators) => {
-                for(var i=0; i < collaborators.length; i++){
-                    if(collaborators[i].userId == newId){
-                        collaboratorAlreadyExists = true;
-                    }
-                }
-            })
-            .catch((err) => {
-                console.log("doesCollaboratorAlreadyExist() has error...")
-                console.log(err)
-            })
-        },
-        
-        doesUserExist(req.body.collaborator) //start back up here
-        .then((userExists) => {
-            wikiQueries.updateWiki(req, req.body, (err, wiki) => {
-                if(err || wiki == null){
-                    console.log(err);
-                    res.redirect(`/wikis/${req.params.wikiId}`);
-                } /*else {
-                    // 1) call createCollaborator()
-                    // this will be in callback function res.redirect(`wikis/${req.params.wikiId}`)
-                } */
-            })
-            .then((wiki) => {
-                doesCollaboratorAlreadyExist(wiki.id, req.body.collaborator)
-                .then(() => {
-                    if(userExists == true && collaboratorAlreadyExists == false){
-                        collaboratorQueries.createCollaborator(wiki.id, req.body.collaborator, (err, collaborator) => {
-                            if(err){
-                                console.log(err)
+        //1
+        function returnUser(username, callback){
+            console.log("returnUser() being ran...")
+            returnedUser = userQueries.findUser(username);
+            console.log("returnedUser is...")
+            console.log(returnUser)
+            if(returnUser == undefined){
+                throw "returnedUser is undefined"
+            }
+            if(returnedUser != null && returnedUser != undefined){
+                userExists = true;
+            }
+            callback(wikiId, returnedUser, callback);
+        };
+        //2 wikiId = req.params.wikiId, user = returnedUser
+        function returnCollaborator(wikiId, user, callbackTwo){
+            console.log("returnCollaborator() is running...");
+            returnedCollaborator = collaboratorQueries.getCollaborator(wikiId);
+            console.log("returnedCollaborator is...");
+            console.log(returnCollaborator);
+            if(returnedCollaborator.id == returnedUser.id){
+                collaboratorAlreadyExists = true;
+            } else if(returnedCollaborator.id == undefined){
+                throw "returnedCollaborator is undefined"
+            } else {
+                collaboratorAlreadyExists = false;
+            }
+            callbackTwo(req)
+        };
+        function updateWiki(req){
+            if(userExists && collaboratorAlreadyExists == false){
+                collaboratorQueries.createCollaborator(req.params.wikiId, req.user.id, (err, collaborator) => {
+                    if(err || collaborator == null){
+                        console.log(err)
+                    } else {
+                        wikiQueries.updateWiki(req, req.body, (err, wiki) => {
+                            if(err || wiki == null){
+                                console.log(err);
+                                res.redirect(`/wikis/${req.params.wikiId}`);
                             } else {
-                                res.redirect(`/wikis/${req.params.wikiId}`)
-                            }
+                                req.flash("notice", "Successfully added collaborator");
+                                res.redirect(`wikis/${req.params.wikiId}`)
+                            } 
                         })
                     }
-                })
-            })
-        })
-        
-        
+                });
+            } else {
+                throw "ERROR:  username did not exist, or they are already a collaborator"
+            }
+        }
+
+        returnUser(req.body.collaborator, returnCollaborator(req.params.wikiId, returnedUser, updateWiki(req)));
     }
   }
