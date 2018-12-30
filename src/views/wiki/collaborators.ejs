@@ -17,7 +17,7 @@
             
             <% collaborators.forEach((collaborator) => { %>
                 <li class="list-group-item">
-                    <h5>User Id: <%= collaborator.user.username %></h5>
+                    <h5>User Id: <%= collaborator.userId %></h5>
                 </li>
                 <% if(wiki.userId == currentUser.id) { %>
                     <a class="btn btn-danger" href="/collaborators/<%= collaborator.id %>/delete">Remove Collaborator</a>
