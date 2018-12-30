@@ -40,28 +40,21 @@ module.exports = {
         })
     },
     updateWiki(req, updatedWiki, callback){
-        return Wiki.findById(req.params.wikiId)
-        .then((wiki) => {
-          if(!wiki){
-            return callback("Wiki not found");
-          }
-          //const authorized = new Authorizer(req.user, topic).update();
-    
-          //if(authorized) {
-            wiki.update(updatedWiki, {
-              fields: Object.keys(updatedWiki)
-            })
-            .then(() => {
-              callback(null, wiki);
-            })
-            .catch((err) => {
-              callback(err);
-            });
-          /*} else {
-            req.flash("notice", "You are not authorized to do that.");
-            callback("Forbidden");
-          }*/
+      return Wiki.findById(req.params.wikiId)
+      .then((wiki) => {
+        if(!wiki){
+          return callback("Wiki not found");
+        }
+        wiki.update(updatedWiki, {
+          fields: Object.keys(updatedWiki)
+        })
+        .then(() => {
+          callback(null, wiki);
+        })
+        .catch((err) => {
+          callback(err);
         });
+      })
     },
     deleteWiki(req, callback){
         return Wiki.findById(req.params.wikiId)

@@ -6,22 +6,21 @@
   <body>
     <main class="container">
       <% include ../static/partials/navbar.ejs %>
-
+      
       <h1>Wikis</h1>
       <% if(currentUser) { %>
         <a href="/wikis/new" class="btn btn-success">New Wiki</a>
         <br>
       <% } %>
 
-      <ul class="list-group">
+        <ul class="list-group"></ul>
+            <% wikis.forEach((wiki) => { %>
+            <li class="list-group-item">
+                <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %> </a>
+            </li>
+            <% }) %>
+        </ul>
 
-        <% wikis.forEach((wiki) => { %>
-
-          <li class="list-group-item">
-            <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %> </a>
-          </li>
-        <% }) %>
-      </ul>
     </main>
   </body>
 </html>

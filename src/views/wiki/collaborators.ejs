@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../static/partials/head.ejs %>
+  </head>
+  <body>
+    <main class="container">
+      <% include ../static/partials/navbar.ejs %>
+
+      <h1>Collaborators</h1>
+        <ul class="list-group">
+            <% if(wiki.userId == currentUser.id) { %>
+                <a href="/wikis/<%= wiki.id %>/collaborator/new" class="btn btn-primary">Add a Collaborator</a>
+                <br>
+                <br>
+            <% } %>
+            
+            <% collaborators.forEach((collaborator) => { %>
+                <li class="list-group-item">
+                    <h5>User Id: <%= collaborator.userId %></h5>
+                </li>
+                <% if(wiki.userId == currentUser.id) { %>
+                    <a class="btn btn-danger" href="/collaborators/<%= collaborator.id %>/delete">Remove Collaborator</a>
+                    <br>
+                <% } %>
+            <% }) %>
+            
+        </ul>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../static/partials/head.ejs %>
+  </head>
+  <body>
+    <% include ../static/partials/navbar.ejs %>
+
+    <main class="container">
+
+    <% include ../static/partials/messages.ejs %>
+
+    <% if((currentUser.id == wikiId || currentUser.role == 1) || currentUser.role == 2) { %>
+        <br>
+        <br>
+        <h1>Add Collaborator</h1>
+
+        <form action="/wikis/<%= wikiId %>/collaborator/create" method="post">
+          <div class="form-group">
+            <input type="text" class="form-control" name="collaboratorId" aria-describedby="titleHelp" placeholder="Enter Their Id">
+            <small class="text-muted" id="titleHelp">You must submit new collaborators one at a time <br>Add users by id</small>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    <% } else if(currentUser.role == 0){ %>
+        <header class="jumbotron my-4">
+            <h1 class="display-3">Upgrade your account for access to private wikis and collaborator features</h1>
+            <a href="/users/upgrade_form" class="btn btn-primary btn-lg">Upgrade</a>
+          </header>
+    <% } else { %>
+        <header class="jumbotron my-4">
+          <h1 class="display-3">This is not your wiki, so you cannot add collaborators.</h1>
+        </header>
+    <% } %>
+
+    </main>
+
+    <% include ../static/partials/baseScripts.ejs %>
+
+  </body>
+</html>

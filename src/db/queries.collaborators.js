@@ -13,16 +13,43 @@ module.exports = {
             console.log(err)
         });
     },
-    createCollaborator(wikiId, userId, callback){
-        return Collaborator.create({
-            wikiId: wikiId,
-            userId: userId
+    getAllCollaborators(wikiId, callback){
+        return Collaborator.findAll({
+            where: {
+                wikiId: wikiId
+            }
         })
-        .then((collaborator) => {
-            callback(null, collaborator)
+        .then((collaborators) => {
+            callback(null, collaborators)
         })
         .catch((err) => {
             callback(err)
         })
+    },
+    createCollaborator(req, callback){
+        return Collaborator.findOne({
+            where: {
+                wikiId: req.params.wikiId,
+                userId: req.body.collaboratorId
+            }
+        })
+        .then((user) => {
+            if(!user){
+                return Collaborator.create({
+                    wikiId: req.params.wikiId,
+                    userId: req.body.collaboratorId
+                })
+                .then((collaborator) => {
+                    callback(null, collaborator)
+                })
+                .catch((err) => {
+                    callback(err)
+                })
+            } else {
+                let err = "This user is already a collaborator on this Wiki";
+                callback(err)
+            }
+        })
+        
     }
 }
