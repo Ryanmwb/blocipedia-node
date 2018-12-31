@@ -129,17 +129,24 @@ module.exports = {
                 console.log(err);
                 res.redirect("/wikis")
             } else {
-                console.log("wiki is...")
-                console.log(wiki)
                 collaboratorQueries.getAllCollaborators(req.params.wikiId, (err, collaborators) => {
                     if(err){
                         console.log(err)
                         res.redirect(`/wikis/${req.params.wikiId}`)
                     } else {
-                        console.log(collaborators)
                         res.render("wiki/collaborators", {collaborators, title: "Collaborators", wiki: wiki});
                     }
                 })
+            }
+        })
+    },
+    deleteCollaborator(req, res, next){
+        collaboratorQueries.deleteCollaborator(req, (err) => {
+            if(err){
+                console.log(err);
+                res.redirect(`/wikis/${req.params.wikiId}/collaborators`)
+            } else {
+                res.redirect(`/wikis/${req.params.wikiId}/collaborators`)
             }
         })
     }

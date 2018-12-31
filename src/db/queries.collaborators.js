@@ -51,5 +51,19 @@ module.exports = {
             }
         })
         
+    },
+    deleteCollaborator(req, callback){
+        return Collaborator.findById(req.params.collaboratorId)
+        .then((collaborator)=> {
+            console.log("collaborator returned is...")
+            console.log(collaborator)
+            collaborator.destroy()
+            .then(() => {
+                callback(null)
+            })
+            .catch((err) => {
+                callback(err)
+            })
+        })
     }
 }
