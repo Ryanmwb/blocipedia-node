@@ -20,7 +20,9 @@
                     <h5>User Id: <%= collaborator.userId %></h5>
                 </li>
                 <% if(wiki.userId == currentUser.id) { %>
-                    <a class="btn btn-danger" href="/wikis/<%= wiki.id %>/collaborators/<%= collaborator.id %>/delete">Remove Collaborator</a>
+                    <form style="display:initial" action="/wikis/<%= wiki.id %>/collaborators/<%= collaborator.id %>/delete" method="post">
+                        <button type="submit" class="btn btn-danger">Remove Collaborator</button>
+                    </form>
                     <br>
                 <% } %>
             <% }) %>
