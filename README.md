@@ -12,3 +12,5 @@
 * Express
 * Dotenv
 * Stripe
+
+## App is live at https://blocipedia-ryan.herokuapp.com/
