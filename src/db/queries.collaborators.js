@@ -65,5 +65,10 @@ module.exports = {
                 callback(err)
             })
         })
+    },
+    isCollaborator(req){
+        return Collaborator.findOne(
+            {where: {userId: req.user.id}}
+        )
     }
 }

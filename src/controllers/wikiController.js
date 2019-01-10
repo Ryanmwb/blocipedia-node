@@ -48,12 +48,19 @@ module.exports = {
         });
     },
     show(req, res, next){
+        var isCollaborator 
         wikiQueries.getWiki(req.params.wikiId, (err, wiki) => {
+            if(collaboratorQueries.isCollaborator(req) !== null){
+                isCollaborator = true;
+            } else if (collaboratorQueries.isCollaborator(req) == null) {
+                isCollaborator = false;
+            }
+
             if(err || wiki == null){
                 res.redirect(404, "/")
             } else {
                 let wikiMDhtml = markdown.toHTML(wiki.body)
-                res.render("wiki/show", {wiki, body: wikiMDhtml, title: "Wiki"});
+                res.render("wiki/show", {wiki, body: wikiMDhtml, title: "Wiki", isCollaborator});
             }
         });
     },

@@ -1,3 +1,5 @@
+const User = require("../db/models").User;
+
 module.exports = {
  
     validateUsers(req, res, next) {
@@ -11,8 +13,18 @@ module.exports = {
       }
  
       const errors = req.validationErrors();
- 
+
+      const duplicate = User.findOne({
+        email: req.body.email
+      })
+      console.log("duplicate is...")
+      console.log(duplicate)
+      console.log("Duplicate end")
       if (errors) {
+        if(duplicate != null) {
+          req.flash("email has already been used", errors);
+          return res.redirect(req.headers.referer);
+        }
         req.flash("error", errors);
         return res.redirect(req.headers.referer);
       } else {
