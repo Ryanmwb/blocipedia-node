@@ -22,6 +22,8 @@ module.exports = {
       console.log("Duplicate end")
       if (errors) {
         if(duplicate != null) {
+          console.log("if duplicate is null..")
+          console.log(duplicate)
           req.flash("email has already been used", errors);
           return res.redirect(req.headers.referer);
         }

@@ -49,13 +49,13 @@ module.exports = {
     },
     show(req, res, next){
         var isCollaborator 
+        if(collaboratorQueries.isCollaborator(req) !== null){
+            isCollaborator = true;
+        } else if (collaboratorQueries.isCollaborator(req) == null) {
+            isCollaborator = false;
+        }
+        
         wikiQueries.getWiki(req.params.wikiId, (err, wiki) => {
-            if(collaboratorQueries.isCollaborator(req) !== null){
-                isCollaborator = true;
-            } else if (collaboratorQueries.isCollaborator(req) == null) {
-                isCollaborator = false;
-            }
-
             if(err || wiki == null){
                 res.redirect(404, "/")
             } else {
